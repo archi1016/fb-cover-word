@@ -1,0 +1,686 @@
+body {
+	margin : 0;
+	min-height : 300px;
+	font-family : "MS PGothic";
+	font-size : 100%;
+	color : #eeeeee;
+	background-color : #666666;
+}
+
+h1, h2, h3, h4, h5, h6 {
+	margin : 0;
+	padding : 0;
+	font-weight : normal;
+}
+
+ul {
+	margin : 0;
+	padding : 0;
+	list-style-type : none;
+}
+
+dl,dt,dd {
+	margin : 0;
+	padding : 0;
+}
+
+p {
+	margin : 0;
+	padding : 0;
+	line-height : 30px;
+	letter-spacing : 2px;
+}
+
+a {
+	display : inline-block;
+	text-decoration : none;
+}
+
+button {
+	padding : 0 10px;
+	font-family : inherit;
+	font-size : 1rem;
+	color : #333333;
+	background-color : #e4e4e4;
+	border-width : 0;
+}
+
+button:hover {
+	background-color : #ffee99;
+}
+
+input,select,textarea {
+	display : inline-block;
+	margin : 0;
+	padding : 0 5px;
+	font-family : "MS Gothic";
+	font-size : 1.2rem;
+	font-weight : bold;
+	color : #333333;
+	background-color : #e4e4e4;
+	border-width : 0;
+	box-sizing : border-box;
+}
+
+input:hover {
+	background-color : #ffee99;
+}
+
+input:focus {
+	background-color : #ffee99;
+}
+
+textarea:hover {
+	background-color : #ffee99;
+}
+
+textarea:focus {
+	background-color : #ffee99;
+}
+
+img {
+	display : block;
+}
+
+span {
+	display : inline-block;
+}
+
+/* ========================================================================== */
+
+.clear {
+	clear : both;
+}
+
+.no-user-select {
+	-webkit-user-select: none;
+	cursor : default;
+}
+
+div.hide {
+	display : none;
+}
+
+div.align-center {
+	margin : 0 auto;
+	width : 851px;
+}
+
+form#dialog-control {
+	position : fixed;
+	z-index : 1;
+	left : -5120px;
+	top : -4800px;
+}
+
+button.remove {
+	color : #f2f2f2;
+	background-color : #aa0000;
+}
+
+button.remove:hover {
+	background-color : #cc0000;
+}
+
+button.export {
+	color : #f2f2f2;
+	background-color : #a04069;
+}
+
+button.export:hover {
+	background-color : #c36990;
+}
+
+button.save {
+	color : #f7f7f7;
+	background-color : #508835;
+}
+
+button.save:hover {
+	background-color : #7aac62;
+}
+
+/* ========================================================================== */
+
+div#container {
+	position : absolute;
+	z-index : 10;
+	left : 0;
+	top : 0;
+	width : 100%;
+	height : 100%;
+	font-size : 1.1rem;
+	overflow : hidden;
+}
+
+/* ========================================================================== */
+
+div#header {
+	line-height : 35px;
+	text-align : center;
+	color : #000000;
+	text-shadow : 0 0 5px #ffffff,0 0 5px #ffffff;
+}
+
+/* ========================================================================== */
+
+div#ribbon-tab {
+	line-height : 35px;
+}
+
+div#ribbon-tab > div {
+	position : relative;
+}
+
+div#ribbon-tab > div > div {
+	float : left;
+	margin-left : 5px;
+	padding : 0 15px;
+	text-align : center;
+}
+
+div#ribbon-tab > div > div:hover {
+	background-color : #777777;
+}
+
+div#ribbon-tab > div > div.focus {
+	color : #000000;
+	background-color : #cccccc;
+}
+
+div#ribbon-tab > div > span {
+	float : left;
+	display : block;
+	padding : 0 15px;
+	text-align : center;
+	background-color : #3b5998;
+}
+
+/* ========================================================================== */
+
+div#ribbon-toolbar {
+	height : 135px;
+	padding : 5px 0;
+	color : #000000;
+	background-color : #cccccc;
+}
+
+div#ribbon-toolbar > div > div {
+	display : none;
+	border-style : solid;
+	border-width : 0 0 0 1px;
+	border-color : #999999;
+}
+
+div#ribbon-toolbar > div > div > div {
+	float : left;
+	padding-top : 5px;
+	border-style : solid;
+	border-width : 0 1px 0 0;
+	border-color : #999999;
+}
+
+div#ribbon-toolbar > div > div > div > div {
+	padding-right : 10px;
+	height : 110px;
+}
+
+div#ribbon-toolbar > div > div > div > div > div {
+	float : left;
+}
+
+div#ribbon-toolbar > div > div > div > h2 {
+	min-width : 100px;
+	line-height : 20px;
+	text-align : center;
+	font-size : 0.9rem;
+	color : #666666;
+}
+
+div#ribbon-toolbar ul {
+	margin-left : 10px;
+}
+
+div#ribbon-toolbar li {
+	margin-bottom : 5px;
+	line-height : 30px;
+}
+
+div#ribbon-toolbar li span {
+	width : 60px;
+	color : #555555;
+}
+
+div#ribbon-toolbar li input {
+	line-height : 30px;
+}
+
+div#ribbon-toolbar li input[type=number] {
+	width : 80px;
+}                                                                                                                                                                                                 
+
+div#ribbon-toolbar li select {
+	height : 30px;
+}
+
+div#ribbon-toolbar li textarea {
+	display : block;
+	width : 320px;
+	height : 100px;
+	line-height : 25px;
+}
+
+div#ribbon-toolbar li button {
+	height : 30px;
+}
+
+div#ribbon-toolbar li button.checked {
+	color : #f2f2f2;
+	background-color : #ee9900;
+}
+
+div#ribbon-toolbar ul.bar li {
+	float : left;
+}
+
+div#ribbon-toolbar ul.bar li button {
+	padding : 0;
+	width : 30px;
+}
+
+div#ribbon-toolbar ul#word-family-table {
+	width : 800px;
+	height : 105px;
+	color : #333333;
+	background-color : #e4e4e4;
+	overflow : auto;
+}
+
+div#ribbon-toolbar ul#word-family-table li {
+	margin : 0;
+	padding-left : 10px;
+	line-height : 35px;
+	font-size : 1.5rem;
+}
+
+div#ribbon-toolbar ul#word-family-table li:hover {
+	background-color : #ffee99;
+}
+
+div#ribbon-toolbar ul#word-family-table li.focus {
+	color : #f2f2f2;
+	background-color : #ee9900;
+}
+
+/* ========================================================================== */
+
+div#ribbon-file {
+	position : fixed;
+	z-index : 20;
+	left : 0;
+	top : 0;
+	width : 100%;
+	background-color : #555555;
+}
+
+div#ribbon-file > div > div {
+	float : left;
+	padding-top : 40px;
+	height : 1080px;
+}
+
+div#ribbon-file div.tab {
+	width : 140px;
+	background-color : #3b5998;
+}
+
+div#ribbon-file div.panel {
+	width : 711px;
+	color : #555555;
+	background-color : #cccccc;
+}
+
+div#ribbon-file div.tab > div {
+	position : relative;
+	padding-left : 20px;
+	font-size : 1.4rem;
+	line-height : 50px;
+}
+
+div#ribbon-file div.tab > div.focus {
+	background-color : #8b9dc3;
+}
+
+div#ribbon-file div.tab > span {
+	display : block;
+	margin-left : 20px;
+	margin-bottom : 20px;
+	width : 40px;
+	line-height : 36px;
+	text-align : center;
+	font-size : 1.6rem;
+	border-style : solid;
+	border-width : 2px;
+	border-color : #eeeeee;
+	border-radius : 20px;
+	box-sizing : border-box;
+}
+
+div#ribbon-file div.panel > div {
+	display : none;
+	padding : 0 20px;
+}
+
+div#ribbon-file li {
+	padding-bottom : 5px;
+}
+
+div#ribbon-file li h3 {
+	padding : 20px 0 5px 0;
+	font-size : 1.6rem;
+	font-weight : bold;
+	color : #3b5998;
+}
+
+div#ribbon-file li a {
+	font-family : Verdana;
+	color : #333333;
+	padding : 0 10px;
+	line-height : 30px;
+}
+
+div#ribbon-file li a:hover {
+	color : #f2f2f2;
+	background-color : #8b9dc3;
+}
+
+div#ribbon-file li p {
+	padding-bottom : 20px;
+}
+
+div#ribbon-file li p span.key {
+	color : #aa0000;
+}
+
+div#ribbon-file li input {
+	line-height : 30px;
+}
+
+div#ribbon-file li textarea {
+	height : 100px;
+	line-height : 25px;
+}
+
+div#ribbon-file li button {
+	line-height : 30px;
+}
+
+div#ribbon-file li img.preview {
+	max-width : 100%;
+	max-height : 360px;
+}
+
+div#ribbon-file li ul.command-button li {
+	padding : 0 10px 20px 0;
+	float: left;
+}
+
+div#ribbon-file li ul.command-button li button {
+	padding : 0 20px;
+	height : 60px;
+	font-size : 1.8em;
+	font-weight : bold;
+}
+
+div#ribbon-file input#cover-url {
+	width : 100%;
+}
+
+div#ribbon-file textarea#family-list {
+	width : 100%;
+	height : 300px;
+}
+
+div#ribbon-file input#family-demo {
+	width : 100%;
+}
+
+div#ribbon-file button#family-save {
+	margin-top : 40px;
+}
+
+/* ========================================================================== */
+
+div#content {
+	padding : 30px 0;
+	background-color : #444444;
+}
+
+div#mask-background-photo {
+	height : 1080px;
+	background-color : #444444;
+}
+
+/* ========================================================================== */
+
+div.top-photo {
+	position : absolute;
+	z-index : 3;
+	left : 0;
+	top : 0;
+	width : 100%;
+	height : 90%;
+	overflow : hidden;
+}
+
+div.top-photo div.photo {
+	position : absolute;
+	z-index : 4;
+	top : 0;
+	left : 0;
+	width : 100%;
+}
+
+div.top-photo div.photo img {
+	width : 100%;
+}
+
+div.top-photo div.gardient {
+	position : absolute;
+	z-index : 5;
+	top : 0;
+	left : 0;
+	width : 100%;
+}
+
+div.top-photo div.gardient div.b1 {
+	height : 45px;
+	background : linear-gradient(rgba(0, 0, 0, 0), #333333);
+}
+
+div.top-photo div.gardient div.b2 {
+	height : 50px;
+	background-color : #333333;
+}
+
+/* ========================================================================== */
+
+div#status-bar {
+	position : fixed;
+	z-index : 15;
+	left : 0;
+	bottom : 0;
+	width : 100%;
+	line-height : 30px;
+	background-color : #3b5998;
+}
+
+div#status-bar li {
+	float : left;
+	width : 140px;
+}
+
+div#status-bar li.right {
+	float : right;
+	width : auto;
+}
+
+div#status-bar li.right span {
+	padding : 0 10px;
+}
+
+div#status-bar li.right span:hover {
+	background-color : #ee9900;
+}
+
+div#status-bar li.right span.checked {
+	background-color : rgba(0, 0, 0, 0.4);
+}
+
+/* ========================================================================== */
+
+div.photos {
+	margin : 0 auto;
+	width : 851px;
+	height : 355px;
+	position : relative;
+	background-color : #333333;
+	-webkit-user-select: none;
+	box-shadow : 0 0 15px #000000;
+}
+
+div.photos div#cover-photo {
+	position : relative;
+	height : 315px;
+	background-color : #282828;
+	overflow : hidden;
+}
+
+div.photos div#cover-photo > img {
+	position : absolute;
+	left : 0;
+	top : 0;
+	width : 100%;
+}
+
+div.photos div#cover-photo > div {
+	position : absolute;
+	left : 40px;
+	top : 40px;
+	white-space : nowrap;
+	cursor : default;
+}
+
+div.photos div#cover-photo div.focus:after {
+	position : absolute;
+	left : 0;
+	top : 0;
+	width : 100%;
+	height : 100%;
+	content : "";
+	border-style : dotted;
+	border-width : 3px;
+	border-color : #eeeeee;
+	box-sizing : border-box;
+}
+
+div.photos div#profile-photo {
+	position : absolute;
+	left : 16px;
+	top : 171px;
+	width : 160px;
+	height : 160px;
+	background-color : #8b9dc3;
+	box-shadow : 0 0 2px #000000;
+	border-style : solid;
+	border-width : 4px;
+	border-color : #f2f2f2;
+	border-radius : 2px;
+}
+
+/* ========================================================================== */
+
+div.dialog {
+	position : fixed;
+	z-index : 999;
+	left : 0;
+	top : 0;
+	width : 100%;
+	height : 100%;
+	background-color : rgba(0, 0, 0, 0.2);
+}
+
+div.dialog div.window {
+	position : absolute;
+	left : 0;
+	top : 0;
+	right : 0;
+	bottom : 0;
+	margin : auto;
+	color : #000000;
+	background-color : #cccccc;
+	border-style : solid;
+	border-width : 10px;
+	border-color : #3b5998;
+	box-shadow : 0 0 15px #000000;
+	box-sizing : border-box;
+}
+
+div.dialog div.window div.close {
+	position : absolute;
+	right : 5px;
+	top : -8px;
+}
+
+div.dialog div.window div.close button {
+	padding : 0;
+	width : 50px;
+	height : 30px;
+	font-size : 1.8rem;
+	color : #f2f2f2;
+	background-color : #aa0000;
+}
+
+div.dialog div.window div.close button:hover {
+	background-color : #cc0000;
+}
+
+div.dialog div.window div.caption {
+	padding-bottom : 10px;
+	font-size : 1.3rem;
+	line-height : 40px;
+	text-align : center;
+	color : #f2f2f2;
+	background-color : #3b5998;
+}
+
+div.dialog div.window div.toolbar {
+	position : absolute;
+	right : 0;
+	bottom : 0;
+	width : 100%;
+	padding : 10px;
+	background-color : #999999;
+	box-sizing : border-box;
+}
+
+div.dialog div.window div.toolbar li {
+	float : right;
+}
+
+div.dialog div.window div.toolbar li button {
+	margin-left : 10px;
+	padding : 0 20px;
+	height : 30px;
+}
+
+div.dialog div.download-cover {
+	width : 939px;
+	height : 600px;
+}
+
+div.dialog  div.download-cover canvas#draw-and-save-image {
+	display : block;
+	margin : 40px auto 0 auto;
+	box-shadow : 0 0 15px #000000;
+}

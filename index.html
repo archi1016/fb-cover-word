@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+<html lang="zh"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=1024">
+<meta http-equiv="Cache-Control" content="no-cache">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
+<link rel="stylesheet" href="main.css">
+<script src="main.js"></script>
+<title>FB封面填字</title>
+</head><body>
+<form id="dialog-control">
+	<input id="dialog-for-load" type="file">
+	<input id="dialog-for-color" type="color" value="#FFFFFF">
+	<a id="dialog-for-download" href="#" download="">Download File</a>
+	<canvas id="draw-and-save-image" width="851" height="315"></canvas>
+</form>
+<div class="top-photo">
+	<div class="gardient">
+		<div class="b1"></div>
+		<div class="b2"></div>
+	</div>
+	<div id="background-photo" class="photo"><img src="" draggable="false"></div>
+</div>
+<div id="status-bar"><div class="align-center"><ul class="no-user-select">
+	<li id="info-qty"></li>
+	<li id="info-position"></li>
+	<li id="info-size"></li>
+	<li class="right"><span id="global-profile-photo" onclick="COVER_PHOTO.hide_or_show_profile_photo(this);">大頭照</span></li>
+</ul><br class="clear"></div></div>
+<div id="container">
+<div id="header">FB封面填字</div>
+<div id="ribbon-tab" class="no-user-select"><div class="align-center">
+	<span onclick="RIBBON_BAR.show_file_panel();">檔案</span>
+	<div panel="panel-style">常用</div>
+	<div panel="panel-word">插入</div>
+	<div panel="panel-content">內容</div>
+	<div panel="panel-background">背景</div>
+	<div panel="panel-border">邊框</div>
+	<div panel="panel-family">字型</div>
+	<div panel="panel-transform">變形</div>
+	<div panel="panel-position">定位</div>
+	<div panel="panel-cover">封面</div>
+	<br class="clear">
+</div></div>
+<div id="ribbon-file" class="hide"><div class="align-center">
+	<div id="file-tab" class="tab no-user-select">
+		<span onclick="RIBBON_BAR.close_file_panel();">&lt;</span>
+		<div panel="panel-project">專案</div>
+		<div panel="panel-faq">常見問題</div>
+		<div panel="panel-family">字型</div>
+		<div panel="panel-resource">參考</div>
+		<div panel="panel-about">關於</div>
+	</div>
+	<div id="file-panel" class="panel">
+		<div id="file-panel-project"><ul>
+			<li><h3>動作</h3></li>
+			<li><ul class="command-button">
+				<li><button onclick="COVER_PHOTO.export_project_to_file();">匯出 ...</button></li>
+				<li><button onclick="COVER_PHOTO.load_project_from_file();">載入 ...</button></li>
+			</ul><br class="clear"></li>
+		</ul></div>
+		<div id="file-panel-family"><ul>
+			<li><h3>字型名稱:</h3></li>
+			<li><textarea id="family-list"></textarea></li>
+			<li><h3>展示文字:</h3></li>
+			<li><input id="family-demo" type="text" value=""></li>
+			<li><button id="family-save" onclick="FAMILY_EDITOR.save_data();" class="save">儲存設定</button></li>
+		</ul></div>
+		<div id="file-panel-faq"><ul>
+			<li><h3>字型名稱哪裡可以取得？</h3></li>
+			<li><p><span class="key">記事本</span>, 格式 --&gt; 字型</p></li>
+		</ul></div>
+		<div id="file-panel-resource"><ul>
+			<li><h3>遭遇並解決問題:</h3></li>
+			<li>1. 從磁碟機載入圖檔並顯示出來</li>
+			<li>2. 滑鼠拖曳元素並計算座標</li>
+			<li>3. 拖曳封面時背景圖連動</li>
+			<li>4. 即時暫存資料</li>
+			<li>5. 刷新頁面讀取暫存資料回來</li>
+			<li>6. 把整個 DOM 畫在 Canvas 元素後並下載圖檔</li>
+			<li>7. 修改參數後即時呈現</li>
+			<li>8. 文字資料的匯出與匯入</li>
+			<li>9. 匯出專案瀏覽器崩潰</li>
+			<li></li>
+			<li><h3>連結:</h3></li>
+			<li><a href="https://developer.mozilla.org/en-US/docs/Web/API/Canvas_API/Drawing_DOM_objects_into_a_canvas" target="_blank">Drawing DOM objects into a canvas</a></li>
+			<li><a href="http://blog.teamtreehouse.com/reading-files-using-the-html5-filereader-api" target="_blank">Reading Files Using The HTML5 FileReader API</a></li>
+			<li><a href="http://stackoverflow.com/questions/20865681/chrome-crashes-when-exporting-file-via-filesystem-api" target="_blank">Chrome crashes when exporting file via Filesystem API</a></li>
+			<li><a href="http://blog.justfont.com/2014/12/jfbook-example/" target="_blank">關於「南去經三國，東來過五湖」</a></li>
+		</ul></div>
+		<div id="file-panel-about"><ul>
+			<li><h3>本軟體</h3></li>
+			<li><p>版本: 1.0<br>作者: 阿麒<br>信箱: archi1016@gmail.com</p></li>
+			<li><h3>為什麼要寫這個 ?</h3></li>
+			<li>
+				<p>　　筆者在使用 PhotoFiltre 為 Facebook 封面照片加上文字時, 發現無法載入簡體字的字型名稱, "康煕字典體(Demo)" 其中<span class="key">煕</span>顯示為？, 複製貼上日文與韓文字, 其輸出的文字也都是？, 由此推斷該軟體對於文字應該是以 ANSI 編碼來處理.</p>
+				<p>　　綜合以上原因, 決定自己寫一個工具, 網頁瀏覽器支援多國語言, 搭配 HTML5 的新功能與 CSS 特效, 應該可以搞出工具.</p>
+				<p>　　介面一開始隨便設計, 隨著設定資料越多, 版面跟著亂了起來, 後來看到微軟 Office 的 Ribbon 介面, 把元件都收在長條狀的框框裡, Facebook 封面圖也是長條狀, 兩者一上一下非常對稱.</p>
+			</li>
+		</ul></div>
+	</div>
+	<br class="clear">
+</div></div>
+<div id="ribbon-toolbar"><div class="align-center">
+	<div id="ribbon-panel-word">
+		<div>
+			<div>
+				<div>
+					<ul>
+						<li><button id="word-remove-button" onclick="FONT_OP.remove_word();" class="remove">移除</button></li>
+					</ul>
+				</div>
+				<br class="clear">
+			</div>
+			<h2>管理</h2>
+		</div>
+		<div>
+			<div>
+				<div>
+					<ul>
+						<li><textarea id="word-insert"></textarea></li>
+					</ul>
+				</div>
+				<div>
+					<ul>
+						<li><button id="word-insert-button" class="insert">新增</button></li>
+					</ul>
+				</div>
+				<br class="clear">
+			</div>
+			<h2>輸入</h2>
+		</div>
+		<br class="clear">
+	</div>
+	<div id="ribbon-panel-style">
+		<div>
+			<div>
+				<div>
+					<ul class="bar">
+						<li><span>形態:</span></li>
+						<li><button id="word-bold">粗</button></li>
+						<li><button id="word-italic">斜</button></li>
+						
+					</ul><br class="clear">
+					<ul class="bar">
+						<li><span>對齊:</span></li>
+						<li><button id="word-align-left">左</button></li>
+						<li><button id="word-align-center">中</button></li>
+						<li><button id="word-align-right">右</button></li>
+					</ul><br class="clear">
+					<ul>
+						<li><span>顏色:</span><button id="word-color" style="color:#FFFFFF;">&#x25A0; ...</button></li>
+					</ul>
+				</div>
+				<div>
+					<ul>
+						<li><span>大小:</span><input id="word-size" type="number" min="12" max="300" value="40"></li>
+						<li><span>字距:</span><input id="word-spacing" type="number" min="-30" max="30" value="0"></li>
+						<li><span>行距:</span><input id="word-line-height" type="number" min="12" max="300" value="40"></li>
+					</ul>
+				</div>
+				<br class="clear">
+			</div>
+			<h2>參數</h2>
+		</div>
+		<div>
+			<div>
+				<div>
+					<ul>
+						<li><span>水平:</span><input id="word-shadow-h" type="number" value="2" min="-30" max="30"></li>
+						<li><span>垂直:</span><input id="word-shadow-v" type="number" value="3" min="-30" max="30"></li>
+						<li><span>擴散:</span><input id="word-shadow-blur" type="number" value="3" min="0" max="30"></li>
+					</ul>
+				</div>
+				<div>
+					<ul>
+						<li><span>顏色:</span><button id="word-shadow-color" style="color:#000000;">&#x25A0; ...</button></li>
+					</ul>
+				</div>
+				<br class="clear">
+			</div>
+			<h2>陰影</h2>
+		</div>
+		<br class="clear">
+	</div>
+	<div id="ribbon-panel-border">
+		<div>
+			<div>
+				<div>
+					<ul>
+						<li><input id="word-round-top-left" type="number" value="0" min="0" max="60" step="1"></li>
+						<li><input id="word-round-bottom-left" type="number" value="0" min="0" max="60" step="1"></li>
+					</ul>
+				</div>
+				<div>
+					<ul>
+						<li><input id="word-round-top-right" type="number" value="0" min="0" max="60" step="1"></li>
+						<li><input id="word-round-bottom-right" type="number" value="0" min="0" max="60" step="1"></li>
+					</ul>
+				</div>
+				<br class="clear">
+			</div>
+			<h2>圓角</h2>
+		</div>
+		<div>
+			<div>
+				<div>
+					<ul>
+						<li><span>樣式:</span><select id="word-border-style" size="1">
+							<option value="none">(無)</option>
+							<option value="solid">實線</option>
+							<option value="dashed">虛線</option>
+							<option value="dotted">點線</option>
+							<option value="double">雙線</option>
+							<option value="groove">凹線</option>
+							<option value="ridge">凸線</option>
+							<option value="inset">沉入線</option>
+							<option value="outset">浮出線</option>
+						</select></li>
+						<li><span>寬度:</span><input id="word-border-width" type="number" value="0" min="0" max="60" step="1"></li>
+						<li><span>顏色:</span><button id="word-border-color" style="color:#000000;">&#x25A0; ...</button></li>
+					</ul>
+				</div>
+				<br class="clear">
+			</div>
+			<h2>參數</h2>
+		</div>
+		<div>
+			<div>
+				<div>
+					<ul>
+						<li><span>水平:</span><input id="word-box-shadow-h" type="number" value="2" min="-30" max="30"></li>
+						<li><span>垂直:</span><input id="word-box-shadow-v" type="number" value="3" min="-30" max="30"></li>
+						<li><span>擴散:</span><input id="word-box-shadow-blur" type="number" value="3" min="0" max="30"></li>
+					</ul>
+				</div>
+				<div>
+					<ul>
+						<li><span>強度:</span><input id="word-box-shadow-spread" type="number" value="0" min="-30" max="30"></li>
+						<li><span>不透:</span><input id="word-box-shadow-alpha" type="number" value="1" min="0" max="1" step="0.05"></li>
+						<li><span>顏色:</span><button id="word-box-shadow-color" style="color:#000000;">&#x25A0; ...</button></li>
+					</ul>
+				</div>
+				<br class="clear">
+			</div>
+			<h2>陰影</h2>
+		</div>
+		<br class="clear">
+	</div>
+	<div id="ribbon-panel-background">
+		<div>
+			<div>
+				<div>
+					<ul>
+						<li><span>不透:</span><input id="word-background-alpha" type="number" value="1" min="0" max="1" step="0.05"></li>
+						<li><span>顏色:</span><button id="word-background-color" style="color:#FFFFFF;">&#x25A0; ...</button></li>
+					</ul>
+				</div>
+				<br class="clear">
+			</div>
+			<h2>填滿</h2>
+		</div>
+		<div>
+			<div>
+				<div>
+					<ul>
+						<li><span></span></li>
+						<li><input id="word-padding-left" type="number" value="0" min="0" max="100" step="1"></li>
+						<li><span></span></li>
+					</ul>
+				</div>
+				<div>
+					<ul>
+						<li><input id="word-padding-top" type="number" value="0" min="0" max="100" step="1"></li>
+						<li><span></span></li>
+						<li><input id="word-padding-bottom" type="number" value="0" min="0" max="100" step="1"></li>
+					</ul>
+				</div>
+				<div>
+					<ul>
+						<li><span></span></li>
+						<li><input id="word-padding-right" type="number" value="0" min="0" max="100" step="1"></li>
+						<li><span></span></li>
+					</ul>
+				</div>
+				<br class="clear">
+			</div>
+			<h2>留白</h2>
+		</div>
+		<br class="clear">
+	</div>
+	<div id="ribbon-panel-content">
+		<div>
+			<div>
+				<div>
+					<ul>
+						<li><button onclick="COVER_PHOTO.export_word_to_file();">匯出 ...</button></li>
+						<li><button onclick="COVER_PHOTO.import_word_from_file();">匯入 ...</button></li>
+						<li><button onclick="COVER_PHOTO.load_word_form_file();">載入 ...</button></li>
+					</ul>
+				</div>
+				<br class="clear">
+			</div>
+			<h2>字庫</h2>
+		</div>
+		<div>
+			<div>
+				<div>
+					<ul>
+						<li><textarea id="word-content"></textarea></li>
+					</ul>
+				</div>
+				<br class="clear">
+			</div>
+			<h2>本文</h2>
+		</div>
+		<br class="clear">
+	</div>
+	<div id="ribbon-panel-family">
+		<div>
+			<div>
+				<div>
+					<ul id="word-family-table" class="no-user-select"></ul>
+				</div>
+				<br class="clear">
+			</div>
+			<h2>清單</h2>
+		</div>
+		<br class="clear">
+	</div>
+	<div id="ribbon-panel-transform">
+		<div>
+			<div>
+				<div>
+					<ul>
+						<li><span>角度:</span><input id="word-transform-rotate" type="number" value="0" min="-359" max="359"> 度</li>
+					</ul>
+				</div>
+				<br class="clear">
+			</div>
+			<h2>旋轉</h2>
+		</div>
+		<div>
+			<div>
+				<div>
+					<ul>
+						<li><span>左右:</span><input id="word-transform-skew-x" type="number" value="0" min="-80" max="80"> 度</li>
+						<li><span>上下:</span><input id="word-transform-skew-y" type="number" value="0" min="-80" max="80"> 度</li>
+					</ul>
+				</div>
+				<br class="clear">
+			</div>
+			<h2>傾斜</h2>
+		</div>
+		<div>
+			<div>
+				<div>
+					<ul>
+						<li><span>X軸:</span><input id="word-transform-origin-x" type="number" value="50" min="0" max="100"> %</li>
+						<li><span>Y軸:</span><input id="word-transform-origin-y" type="number" value="50" min="0" max="100"> %</li>
+					</ul>
+				</div>
+				<br class="clear">
+			</div>
+			<h2>原點</h2>
+		</div>
+		<div>
+			<div>
+				<div>
+					<ul>
+						<li><button id="word-transform-mirror-h">水平方向</button></li>
+						<li><button id="word-transform-mirror-v">垂直方向</button></li>
+					</ul>
+				</div>
+				<br class="clear">
+			</div>
+			<h2>鏡像</h2>
+		</div>
+		<br class="clear">
+	</div>
+	<div id="ribbon-panel-cover">
+		<div>
+			<div>
+				<div>
+					<ul>
+						<li><button onclick="COVER_PHOTO.show_load_dialog();">從檔案 ...</button></li>
+						<li><button onclick="COVER_PHOTO.show_url_dialog();">從網址 ...</button></li>
+					</ul>
+				</div>
+				<br class="clear">
+			</div>
+			<h2>圖檔</h2>
+		</div>
+		<div>
+			<div>
+				<div>
+					<ul>
+						<li><span>模糊:</span><input id="filter-blur" type="number" value="0" min="0" max="30"> px</li>
+						<li><span>黑白:</span><input id="filter-grayscale" type="number" value="0" min="0" max="100" step="4"> %</li>
+						<li><span>復古:</span><input id="filter-sepia" type="number" value="0" min="0" max="100" step="4"> %</li>
+					</ul>
+				</div>
+				<div>
+					<ul>
+						<li><span>飽和:</span><input id="filter-saturate" type="number" value="1" min="0" max="3" step="0.05"></li>
+						<li><span>亮度:</span><input id="filter-brightness" type="number" value="1" min="0" max="3" step="0.05"></li>
+						<li><span>對比:</span><input id="filter-contrast" type="number" value="1" min="0" max="3" step="0.05"></li>
+					</ul>
+				</div>
+				<div>
+					<ul>
+						<li><span>色相:</span><input id="filter-hue" type="number" value="0" min="0" max="360" step="4"> 度</li>
+						<li><span>負片:</span><input id="filter-invert" type="number" value="0" min="0" max="100" step="4"> %</li>
+						<li><span>&nbsp;</span><button id="filter-reset">重置</button></li>
+					</ul>
+				</div>
+				<br class="clear">
+			</div>
+			<h2>濾鏡</h2>
+		</div>
+		<div>
+			<div>
+				<div>
+					<ul>
+						<li><button id="filter-mirror-h">水平方向</button></li>
+						<li><button id="filter-mirror-v">垂直方向</button></li>
+					</ul>
+				</div>
+				<br class="clear">
+			</div>
+			<h2>鏡像</h2>
+		</div>
+		<div>
+			<div>
+				<div>
+					<ul>
+						<li><button onclick="COVER_PHOTO.export_cover_photo();" class="export">匯出 ...</button></li>
+					</ul>
+				</div>
+				<br class="clear">
+			</div>
+			<h2>成稿</h2>
+		</div>
+		<br class="clear">
+	</div>
+	<div id="ribbon-panel-position">
+		<div>
+			<div>
+				<div>
+					<ul>
+						<li><button id="global-lock-cover">拖曳封面</button></li>
+						<li><button id="global-lock-h">文字水平</button></li>
+						<li><button id="global-lock-v">文字重直</button></li>
+					</ul>
+				</div>
+				<br class="clear">
+			</div>
+			<h2>鎖定</h2>
+		</div>
+		<div>
+			<div>
+				<div>
+					<ul>
+						<li><button onclick="FONT_OP.set_word_position('left', 'top');">左上</button></li>
+						<li><button onclick="FONT_OP.set_word_position('left', 'center');">左中</button></li>
+						<li><button onclick="FONT_OP.set_word_position('left', 'bottom');">左下</button></li>
+					</ul>
+				</div>
+				<div>
+					<ul>
+						<li><button onclick="FONT_OP.set_word_position('center', 'top');">中上</button></li>
+						<li><button onclick="FONT_OP.set_word_position('center', 'center');">中間</button></li>
+						<li><button onclick="FONT_OP.set_word_position('center', 'bottom');">中下</button></li>
+					</ul>
+				</div>
+				<div>
+					<ul>
+						<li><button onclick="FONT_OP.set_word_position('right', 'top');">右上</button></li>
+						<li><button onclick="FONT_OP.set_word_position('right', 'center');">右中</button></li>
+						<li><button onclick="FONT_OP.set_word_position('right', 'bottom');">右下</button></li>
+					</ul>
+				</div>
+				<br class="clear">
+			</div>
+			<h2>對齊</h2>
+		</div>
+		<div>
+			<div>
+				<div>
+					<ul>
+						<li><span>X 軸:</span><input id="global-grid-x" type="number" value="4" min="2" max="128"></li>
+						<li><span>Y 軸:</span><input id="global-grid-y" type="number" value="4" min="2" max="128"></li>
+					</ul>
+				</div>
+				<br class="clear">
+			</div>
+			<h2>格線</h2>
+		</div>
+		<br class="clear">
+	</div>
+</div></div>
+
+<div id="content">
+	<div class="photos">
+		<div id="cover-photo"><img src="" draggable="false"></div>
+		<div id="profile-photo" class="hide"></div>
+	</div>
+</div>
+
+<div id="mask-background-photo"></div>
+
+</div><script>
+var STR = {
+	cover_from_url:	'請輸入圖片來源網址'
+	,confirm_remove_word:	'確定要移除嗎？'
+	,confirm_load_word:	'現有的文字會全部清除, 繼續嗎？'
+	,customized_family:	'自訂字型清單'
+	,confirm_reset_filter:	'重置濾鏡嗎？'
+	,done_save_family:	'儲存完成！'
+	,ok:			'確定'
+	,cancel:		'取消'
+	,export_word_file:	'字庫名稱'
+	,export_project_file:	'專案名稱'
+	,export_cover_file:	'圖檔名稱'
+	,one_line_one_item:	'一行一組'
+	,status_qty:		'字組'
+	,status_position:	'位置'
+	,status_size:		'大小'
+	,default_family_demo:	'永東國酬愛鬱靈鷹袋'
+	,default_family: [
+		'MS PGothic'
+		,'微軟正黑體'
+		,'儷黑 Pro'
+		,'黑體-繁'
+		,'蘭亭黑-繁'
+		,'蘋果儷中黑'
+		,'標楷體'
+		,'康煕字典體(Demo)'
+		,'全真顏體'
+		,'金梅毛張楷'
+		,'和平粗楷'
+		,'Noto Sans CJK TC Black'
+		,'Noto Sans CJK TC Bold'
+		,'Noto Sans CJK TC Medium'
+	]
+};
+</script></body></html>
